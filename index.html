@@ -129,24 +129,36 @@
             margin-bottom: 10px;
         }
 
-        /* 核心修改：footer布局 - 弹性+自动推挤，点赞固定在最后 */
+        /* 核心修改：footer布局 - 左/中/右均匀分布，间距相等 */
         .footer {
             display: flex;
             align-items: center;
+            justify-content: space-between; /* 关键：均匀分布，间距相等 */
             font-size: 14px;
             color: #999;
-            /* 关键：填满整行宽度 */
-            width: 100%;
-            /* 关键：元素间距 */
-            gap: 15px;
+            width: 100%; /* 填满整行，保证分布均匀 */
+            /* 取消gap，避免和space-between冲突 */
         }
 
-        /* 点赞数固定在最右侧 */
-        .footer .like {
-            /* 关键：自动推到最右边 */
-            margin-left: auto;
-            /* 保证和左边元素间距一致 */
-            margin-right: 0;
+        /* 可选：给每个元素加最小宽度，防止小屏文字重叠 */
+        .footer span {
+            flex: 1; /* 每个元素占1/3宽度，保证分布均匀 */
+            text-align: center; /* 时间居中，来源左对齐，点赞右对齐需单独设置 */
+        }
+
+        /* 来源强制左对齐 */
+        #previewSource {
+            text-align: left;
+        }
+
+        /* 时间保持居中 */
+        #previewTime {
+            text-align: center;
+        }
+
+        /* 点赞强制右对齐 */
+        #previewLike {
+            text-align: right;
         }
 
         /* 手机小屏适配 */
@@ -163,7 +175,12 @@
             }
             .footer {
                 font-size: 12px;
-                gap: 10px; /* 小屏缩小间距 */
+            }
+            /* 小屏缩小文字，避免重叠 */
+            .footer span {
+                white-space: nowrap; /* 禁止文字换行 */
+                overflow: hidden; /* 超出隐藏（可选） */
+                text-overflow: ellipsis; /* 超出显示省略号（可选） */
             }
         }
     </style>
@@ -219,8 +236,7 @@
                 <div class="footer">
                     <span id="previewSource">来自杰克的留言</span>
                     <span id="previewTime">5:20pm</span>
-                    <!-- 核心修改：给点赞数加class="like" -->
-                    <span id="previewLike" class="like">点赞1314</span>
+                    <span id="previewLike">点赞1314</span>
                 </div>
             </div>
         </div>
