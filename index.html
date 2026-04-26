@@ -1,254 +1,261 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <title>自定义杰佣留言卡片</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Helvetica Neue", sans-serif;
-        }
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<title>自定义杰佣留言卡片</title>
+		<style>
+			* {
+				margin: 0;
+				padding: 0;
+				box-sizing: border-box;
+				font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Helvetica Neue", sans-serif;
+			}
 
-        body {
-            background-color: #f5f5f5;
-            padding: 15px;
-        }
+			body {
+				background-color: #f5f5f5;
+				padding: 15px;
+			}
 
-        /* 编辑区样式 */
-        .editor {
-            background: #fff;
-            padding: 15px;
-            border-radius: 12px;
-            margin-bottom: 15px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-        }
+			/* 编辑区样式 */
+			.editor {
+				background: #fff;
+				padding: 15px;
+				border-radius: 12px;
+				margin-bottom: 15px;
+				box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+			}
 
-        .editor h3 {
-            font-size: 18px;
-            margin-bottom: 12px;
-            color: #333;
-            text-align: center;
-        }
+			.editor h3 {
+				font-size: 18px;
+				margin-bottom: 12px;
+				color: #333;
+				text-align: center;
+			}
 
-        .editor-item {
-            margin-bottom: 10px;
-        }
+			.editor-item {
+				margin-bottom: 10px;
+			}
 
-        .editor-item label {
-            display: block;
-            font-size: 14px;
-            color: #666;
-            margin-bottom: 4px;
-        }
+			.editor-item label {
+				display: block;
+				font-size: 14px;
+				color: #666;
+				margin-bottom: 4px;
+			}
 
-        /* 头像上传按钮 */
-        .avatar-upload {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
+			/* 头像上传按钮 */
+			.avatar-upload {
+				display: flex;
+				align-items: center;
+				gap: 10px;
+			}
 
-        #avatarInput {
-            display: none;
-        }
+			#avatarInput {
+				display: none;
+			}
 
-        .upload-btn {
-            background: #0088ff;
-            color: #fff;
-            padding: 6px 12px;
-            border-radius: 8px;
-            font-size: 14px;
-            cursor: pointer;
-            border: none;
-        }
+			.upload-btn {
+				background: #0088ff;
+				color: #fff;
+				padding: 6px 12px;
+				border-radius: 8px;
+				font-size: 14px;
+				cursor: pointer;
+				border: none;
+			}
 
-        .preview-avatar-small {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            background: #eee;
-            object-fit: cover;
-        }
+			.preview-avatar-small {
+				width: 40px;
+				height: 40px;
+				border-radius: 50%;
+				background: #eee;
+				object-fit: cover;
+			}
 
-        .editor-item input,
-        .editor-item textarea {
-            width: 100%;
-            padding: 8px 12px;
-            border: 1px solid #ddd;
-            border-radius: 8px;
-            font-size: 14px;
-            outline: none;
-        }
+			.editor-item input,
+			.editor-item textarea {
+				width: 100%;
+				padding: 8px 12px;
+				border: 1px solid #ddd;
+				border-radius: 8px;
+				font-size: 14px;
+				outline: none;
+			}
 
-        .editor-item input:focus,
-        .editor-item textarea:focus {
-            border-color: #0088ff;
-        }
+			.editor-item input:focus,
+			.editor-item textarea:focus {
+				border-color: #0088ff;
+			}
 
-        /* 预览区样式（还原截图） */
-        .preview {
-            background: #fff;
-            padding: 20px;
-            border-radius: 12px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-        }
+			/* 预览区样式（还原截图） */
+			.preview {
+				background: #fff;
+				padding: 20px;
+				border-radius: 12px;
+				box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+			}
 
-        .message-card {
-            display: flex;
-            align-items: flex-start;
-            gap: 12px;
-        }
+			.message-card {
+				display: flex;
+				align-items: flex-start;
+				gap: 12px;
+			}
 
-        .avatar {
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            object-fit: cover;
-            background: #eee;
-        }
+			.avatar {
+				width: 60px;
+				height: 60px;
+				border-radius: 50%;
+				object-fit: cover;
+				background: #eee;
+			}
 
-        .content {
-            flex: 1;
-        }
+			.content {
+				flex: 1;
+			}
 
-        .name {
-            font-size: 18px;
-            font-weight: bold;
-            color: #333;
-            margin-bottom: 6px;
-        }
+			.name {
+				font-size: 18px;
+				font-weight: bold;
+				color: #333;
+				margin-bottom: 6px;
+			}
 
-        .text {
-            font-size: 16px;
-            color: #333;
-            line-height: 1.4;
-            margin-bottom: 10px;
-        }
+			.text {
+				font-size: 16px;
+				color: #333;
+				line-height: 1.4;
+				margin-bottom: 10px;
+			}
 
-        .footer {
-            display: flex;
-            align-items: center;
-            gap: 20px;
-            font-size: 14px;
-            color: #999;
-        }
+			.footer {
+				display: flex;
+				/* 关键：让子元素均匀分布，两端对齐，中间间距自动平分 */
+				justify-content: space-between;
+				align-items: center;
+				width: 100%;
+				/* 撑满父容器宽度 */
+				font-size: 14px;
+				color: #999;
+			}
 
-        /* 手机小屏适配 */
-        @media (max-width: 375px) {
-            .avatar {
-                width: 50px;
-                height: 50px;
-            }
-            .name {
-                font-size: 16px;
-            }
-            .text {
-                font-size: 14px;
-            }
-            .footer {
-                font-size: 12px;
-                gap: 15px;
-            }
-        }
-    </style>
-</head>
-<body>
-    <!-- 编辑区 -->
-    <div class="editor">
-        <h3>自定义留言卡片</h3>
-        
-        <!-- 头像上传 -->
-        <div class="editor-item">
-            <label>选择头像：</label>
-            <div class="avatar-upload">
-                <button class="upload-btn" onclick="document.getElementById('avatarInput').click()">选择相册图片</button>
-                <img class="preview-avatar-small" id="smallAvatar" src="./杰克.jpg" alt="预览头像">
-                <input type="file" id="avatarInput" accept="image/*" onchange="previewAvatar(this)">
-            </div>
-        </div>
+			/* 手机小屏适配 */
+			@media (max-width: 375px) {
+				.avatar {
+					width: 50px;
+					height: 50px;
+				}
 
-        <div class="editor-item">
-            <label>名字：</label>
-            <input type="text" id="userName" value="杰克" placeholder="输入名字" oninput="updatePreview()">
-        </div>
+				.name {
+					font-size: 16px;
+				}
 
-        <div class="editor-item">
-            <label>留言内容：</label>
-            <textarea id="messageText" rows="2" placeholder="输入留言内容" oninput="updatePreview()">@奈布 一直纠缠下去吧 命运 我和你</textarea>
-        </div>
+				.text {
+					font-size: 14px;
+				}
 
-        <div class="editor-item">
-            <label>来源：</label>
-            <input type="text" id="sourceText" value="来自杰克的留言" placeholder="输入来源" oninput="updatePreview()">
-        </div>
+				.footer {
+					font-size: 12px;
+					gap: 15px;
+				}
+			}
+		</style>
+	</head>
+	<body>
+		<!-- 编辑区 -->
+		<div class="editor">
+			<h3>自定义留言卡片</h3>
 
-        <div class="editor-item">
-            <label>时间：</label>
-            <input type="text" id="timeText" value="5:20pm" placeholder="输入时间" oninput="updatePreview()">
-        </div>
+			<!-- 头像上传 -->
+			<div class="editor-item">
+				<label>选择头像：</label>
+				<div class="avatar-upload">
+					<button class="upload-btn" onclick="document.getElementById('avatarInput').click()">选择相册图片</button>
+					<img class="preview-avatar-small" id="smallAvatar" src="./杰克.jpg" alt="预览头像">
+					<input type="file" id="avatarInput" accept="image/*" onchange="previewAvatar(this)">
+				</div>
+			</div>
 
-        <div class="editor-item">
-            <label>点赞数：</label>
-            <input type="text" id="likeNum" value="1314" placeholder="输入点赞数" oninput="updatePreview()">
-        </div>
-    </div>
+			<div class="editor-item">
+				<label>名字：</label>
+				<input type="text" id="userName" value="杰克" placeholder="输入名字" oninput="updatePreview()">
+			</div>
 
-    <!-- 预览区 -->
-    <div class="preview">
-        <div class="message-card">
-            <img class="avatar" id="previewAvatar" src="./杰克.jpg" alt="头像">
-            <div class="content">
-                <div class="name" id="previewName">杰克</div>
-                <div class="text" id="previewText">@奈布 一直纠缠下去吧 命运 我和你</div>
-                <div class="footer">
-                    <span id="previewSource">来自杰克的留言</span>
-                    <span id="previewTime">5:20pm</span>
-                    <span id="previewLike">点赞1314</span>
-                </div>
-            </div>
-        </div>
-    </div>
+			<div class="editor-item">
+				<label>留言内容：</label>
+				<textarea id="messageText" rows="2" placeholder="输入留言内容"
+					oninput="updatePreview()">@奈布 一直纠缠下去吧 命运 我和你</textarea>
+			</div>
 
-    <script>
-        // 头像预览函数（选相册图片）
-        function previewAvatar(input) {
-            if (input.files && input.files[0]) {
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    // 更新小预览图和主预览图
-                    document.getElementById('smallAvatar').src = e.target.result;
-                    document.getElementById('previewAvatar').src = e.target.result;
-                }
-                reader.readAsDataURL(input.files[0]);
-            }
-        }
+			<div class="editor-item">
+				<label>来源：</label>
+				<input type="text" id="sourceText" value="来自杰克的留言" placeholder="输入来源" oninput="updatePreview()">
+			</div>
 
-        // 实时更新留言等信息
-        function updatePreview() {
-            const userName = document.getElementById('userName').value || '未知用户';
-            const messageText = document.getElementById('messageText').value || '请输入留言内容';
-            const sourceText = document.getElementById('sourceText').value || '未知来源';
-            const timeText = document.getElementById('timeText').value || '未知时间';
-            const likeNum = document.getElementById('likeNum').value || 0;
+			<div class="editor-item">
+				<label>时间：</label>
+				<input type="text" id="timeText" value="5:20pm" placeholder="输入时间" oninput="updatePreview()">
+			</div>
 
-            document.getElementById('previewName').textContent = userName;
-            document.getElementById('previewText').textContent = messageText;
-            document.getElementById('previewSource').textContent = sourceText;
-            document.getElementById('previewTime').textContent = timeText;
-            document.getElementById('previewLike').textContent = `点赞${likeNum}`;
-        }
+			<div class="editor-item">
+				<label>点赞数：</label>
+				<input type="text" id="likeNum" value="1314" placeholder="输入点赞数" oninput="updatePreview()">
+			</div>
+		</div>
 
-        // 初始化加载默认头像
-        window.onload = function() {
-            if (!document.getElementById('previewAvatar').src) {
-                document.getElementById('previewAvatar').src = 'https://picsum.photos/60/60';
-                document.getElementById('smallAvatar').src = 'https://picsum.photos/40/40';
-            }
-        }
-    </script>
-</body>
+		<!-- 预览区 -->
+		<div class="preview">
+			<div class="message-card">
+				<img class="avatar" id="previewAvatar" src="./杰克.jpg" alt="头像">
+				<div class="content">
+					<div class="name" id="previewName">杰克</div>
+					<div class="text" id="previewText">@奈布 一直纠缠下去吧 命运 我和你</div>
+					<div class="footer">
+						<span id="previewSource">来自杰克的留言</span>
+						<span id="previewTime">5:20pm</span>
+						<span id="previewLike">点赞1314</span>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<script>
+			// 头像预览函数（选相册图片）
+			function previewAvatar(input) {
+				if (input.files && input.files[0]) {
+					const reader = new FileReader();
+					reader.onload = function(e) {
+						// 更新小预览图和主预览图
+						document.getElementById('smallAvatar').src = e.target.result;
+						document.getElementById('previewAvatar').src = e.target.result;
+					}
+					reader.readAsDataURL(input.files[0]);
+				}
+			}
+
+			// 实时更新留言等信息
+			function updatePreview() {
+				const userName = document.getElementById('userName').value || '未知用户';
+				const messageText = document.getElementById('messageText').value || '请输入留言内容';
+				const sourceText = document.getElementById('sourceText').value || '未知来源';
+				const timeText = document.getElementById('timeText').value || '未知时间';
+				const likeNum = document.getElementById('likeNum').value || 0;
+
+				document.getElementById('previewName').textContent = userName;
+				document.getElementById('previewText').textContent = messageText;
+				document.getElementById('previewSource').textContent = sourceText;
+				document.getElementById('previewTime').textContent = timeText;
+				document.getElementById('previewLike').textContent = `点赞${likeNum}`;
+			}
+
+			// 初始化加载默认头像
+			window.onload = function() {
+				if (!document.getElementById('previewAvatar').src) {
+					document.getElementById('previewAvatar').src = 'https://picsum.photos/60/60';
+					document.getElementById('smallAvatar').src = 'https://picsum.photos/40/40';
+				}
+			}
+		</script>
+	</body>
 </html>
