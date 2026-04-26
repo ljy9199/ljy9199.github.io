@@ -95,12 +95,17 @@
             padding: 20px;
             border-radius: 12px;
             box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            /* 关键：允许预览区横向滚动，保证文字不换行 */
+            overflow-x: auto;
         }
 
         .message-card {
             display: flex;
             align-items: flex-start;
             gap: 12px;
+            /* 关键：让卡片宽度自适应内容，不被容器限制 */
+            width: fit-content;
+            min-width: 100%;
         }
 
         .avatar {
@@ -113,6 +118,8 @@
 
         .content {
             flex: 1;
+            /* 保证内容区宽度自适应 */
+            min-width: 0;
         }
 
         .name {
@@ -129,23 +136,45 @@
             margin-bottom: 10px;
         }
 
-        /* 核心：footer布局 - 等间距+精准对齐 */
+        /* 核心：footer布局 - 同一行完整显示，不换行 */
         .footer {
             display: flex;
             align-items: center;
-            /* 关键：space-around 让所有间距（左右边距+元素间距）完全相等 */
-            justify-content: space-around;
             font-size: 14px;
             color: #999;
-            width: 100%; /* 填满整行，保证间距均匀分配 */
+            /* 关键：禁止换行，保证三者在同一行 */
+            white-space: nowrap;
+            /* 关键：自适应宽度，不被容器限制 */
+            width: fit-content;
+            min-width: 100%;
+            /* 调整间距，匹配截图 */
+            gap: 20px;
         }
 
-        /* 强制固定对齐方式，不受space-around影响 */
-        #previewSource { text-align: left; width: 33.33%; }  /* 占1/3宽度，左对齐 */
-        #previewTime { text-align: center; width: 33.33%; } /* 占1/3宽度，居中 */
-        #previewLike { text-align: right; width: 33.33%; }  /* 占1/3宽度，右对齐 */
+        /* 来源自适应宽度，左对齐 */
+        #previewSource {
+            text-align: left;
+            flex: 1;
+            /* 禁止文字省略，完整显示 */
+            overflow: visible;
+            text-overflow: clip;
+        }
 
-        /* 手机小屏适配 */
+        /* 时间固定宽度，居中 */
+        #previewTime {
+            text-align: center;
+            flex: none;
+            width: 80px; /* 固定宽度，保证居中 */
+        }
+
+        /* 点赞固定宽度，右对齐 */
+        #previewLike {
+            text-align: right;
+            flex: none;
+            width: 80px; /* 固定宽度，保证靠右 */
+        }
+
+        /* 手机小屏适配（只调字号，不换行） */
         @media (max-width: 375px) {
             .avatar {
                 width: 50px;
@@ -159,12 +188,10 @@
             }
             .footer {
                 font-size: 12px;
+                gap: 15px; /* 小屏缩小间距，仍保证同一行 */
             }
-            /* 小屏防止文字换行打乱布局 */
-            .footer span {
-                white-space: nowrap;
-                overflow: hidden;
-                text-overflow: ellipsis;
+            #previewTime, #previewLike {
+                width: 70px; /* 小屏微调固定宽度 */
             }
         }
     </style>
