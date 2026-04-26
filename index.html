@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>留言卡片</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Helvetica Neue", sans-serif;
+        }
+        body {
+            background-color: #f5f5f5;
+            padding: 20px;
+        }
+        .message-card {
+            background: #fff;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+        }
+        .avatar {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            object-fit: cover;
+            background: #eee;
+        }
+        .content {
+            flex: 1;
+        }
+        .name {
+            font-size: 18px;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 6px;
+        }
+        .text {
+            font-size: 16px;
+            color: #333;
+            line-height: 1.4;
+            margin-bottom: 10px;
+        }
+        .footer {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            font-size: 14px;
+            color: #999;
+        }
+        @media (max-width: 375px) {
+            .avatar {
+                width: 50px;
+                height: 50px;
+            }
+            .name {
+                font-size: 16px;
+            }
+            .text {
+                font-size: 14px;
+            }
+            .footer {
+                font-size: 12px;
+                gap: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="message-card">
+        <!-- 改这里的图片链接、名字、文案等即可 -->
+        <img class="avatar" src="./杰克.jpg" alt="头像">
+        <div class="content">
+            <div class="name">杰克</div>
+            <div class="text">@奈布 一直纠缠下去吧 命运 我和你</div>
+            <div class="footer">
+                <span>来自杰克的留言</span>
+                <span>5:20pm</span>
+                <span>点赞1314</span>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
