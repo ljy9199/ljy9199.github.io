@@ -129,12 +129,24 @@
             margin-bottom: 10px;
         }
 
+        /* 核心修改：footer布局 - 弹性+自动推挤，点赞固定在最后 */
         .footer {
             display: flex;
             align-items: center;
-            gap: 20px;
             font-size: 14px;
             color: #999;
+            /* 关键：填满整行宽度 */
+            width: 100%;
+            /* 关键：元素间距 */
+            gap: 15px;
+        }
+
+        /* 点赞数固定在最右侧 */
+        .footer .like {
+            /* 关键：自动推到最右边 */
+            margin-left: auto;
+            /* 保证和左边元素间距一致 */
+            margin-right: 0;
         }
 
         /* 手机小屏适配 */
@@ -151,7 +163,7 @@
             }
             .footer {
                 font-size: 12px;
-                gap: 15px;
+                gap: 10px; /* 小屏缩小间距 */
             }
         }
     </style>
@@ -207,7 +219,8 @@
                 <div class="footer">
                     <span id="previewSource">来自杰克的留言</span>
                     <span id="previewTime">5:20pm</span>
-                    <span id="previewLike">点赞1314</span>
+                    <!-- 核心修改：给点赞数加class="like" -->
+                    <span id="previewLike" class="like">点赞1314</span>
                 </div>
             </div>
         </div>
